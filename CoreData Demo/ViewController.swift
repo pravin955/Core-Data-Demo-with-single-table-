@@ -9,11 +9,24 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var manager: AuthorManager = AuthorManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        print(urls)
+        createAuthor()
+        fetchAuthors()
     }
-
-
+    
+    private func createAuthor() {
+        manager.create(author: AuthorModel(firstName: "Pravya", lastName: "Shri", id: UUID()))
+    }
+    
+    private func fetchAuthors() {
+        let allAuthors = manager.getAll()
+        allAuthors? .forEach({ (author) in
+            print(author.firstName!)
+        })
+        
+    }
 }
-
